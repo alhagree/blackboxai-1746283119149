@@ -1,0 +1,121 @@
+<Window x:Class="WindowsApp.Views.DashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:WindowsApp.ViewModels"
+        mc:Ignorable="d"
+        Title="لوحة التحكم" 
+        Height="600" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Window.DataContext>
+        <viewmodels:DashboardViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- القائمة الجانبية -->
+        <materialDesign:Card Grid.Column="0"
+                            Background="{DynamicResource PrimaryHueDarkBrush}"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            UniformCornerRadius="0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="16">
+                    <materialDesign:PackIcon Kind="AccountCircle" 
+                                           Width="64" 
+                                           Height="64" 
+                                           HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding CurrentUser}"
+                             HorizontalAlignment="Center"
+                             Margin="0,8"
+                             FontSize="16"/>
+                    <Separator Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0,8"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom" Margin="16">
+                    <Button Content="تسجيل الخروج"
+                            Command="{Binding LogoutCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"/>
+                </StackPanel>
+
+                <StackPanel Margin="8">
+                    <Button Content="الرئيسية"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Right"
+                            Margin="4"/>
+                    <Button Content="الإعدادات"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Right"
+                            Margin="4"/>
+                    <Button Content="المستخدمين"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Right"
+                            Margin="4"/>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:Card>
+
+        <!-- المحتوى الرئيسي -->
+        <Grid Grid.Column="1" Margin="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- شريط العنوان -->
+            <Grid Grid.Row="0" Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding WelcomeMessage}"
+                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                         VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1" 
+                          Orientation="Horizontal"
+                          VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentTime}"
+                             VerticalAlignment="Center"
+                             Margin="8,0"/>
+                    <Button Command="{Binding RefreshCommand}"
+                            Style="{StaticResource MaterialDesignIconButton}">
+                        <materialDesign:PackIcon Kind="Refresh"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- منطقة المحتوى -->
+            <materialDesign:Card Grid.Row="1" Margin="0,8">
+                <Grid Margin="16">
+                    <TextBlock Text="محتوى لوحة التحكم"
+                             Style="{StaticResource MaterialDesignBody1TextBlock}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>
